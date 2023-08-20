@@ -36,9 +36,34 @@ const MORSE_TABLE = {
     '----.':  '9',
     '-----':  '0',
 };
-
+function blockToMorse(block10) {
+    const i1 = block10.indexOf('1');
+    block10 = block10.substring(i1);
+    let morse = '';
+    for (let i = 0; i < block10.length; i += 2) {
+        const code = block10[i] + block10[i + 1];
+        morse += code === '10' ? '.' : '-';
+    }
+    return morse;
+}
+function morseToLetter(morse) {
+    return MORSE_TABLE[morse];
+}
 function decode(expr) {
     // write your solution here
+    let ret = '';
+    for(let i = 0; i < expr.length; i += 10){
+        const block10 = expr.substring(i, i + 10);
+        if(block10[0] === '*'){
+            ret += ' ';
+        } else {
+            const morse = blockToMorse(block10);
+            const letter = morseToLetter(morse);
+            ret += letter;
+        }
+
+    }
+    return ret;
 }
 
 module.exports = {
